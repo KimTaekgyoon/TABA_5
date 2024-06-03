@@ -26,6 +26,9 @@ import base64
 
 this_dir = "C:\\Users\\jeong\\Desktop\\개발\\Python\\Python_Project\\TABA_WIT"
 
+text_list = ['차림표', '8', '돼지불백', '닭갈비', '잡채', '10,000원', '12,000원', '000원', '5', '3', '된장 찌개', '김치 찌개', '순두부 찌개', '8,000원', '8,000원', '8,000원', '8', '제육뒷밥', '계란탕', '비범밥', '000원', '6,000원', '10,000원', '영업시간 안내 오전 6시', '오후 11시까지', '휴무', '일요일, 공휴일', '12,(', '10,다']
+bounding_box_list = [[[434, 96], [684, 96], [684, 198], [434, 198]], [[765, 271], [807, 271], [807, 313], [765, 313]], [[221, 499], [339, 499], [339, 537], [221, 537]], [[523, 497], [615, 497], [615, 537], [523, 537]], [[825, 497], [890, 497], [890, 538], [825, 538]], [[230, 550], [334, 550], [334, 582], [230, 582]], [[518, 550], [622, 550], [622, 580], [518, 580]], [[840, 548], [912, 548], [912, 578], [840, 578]], [[473, 643], [509, 643], [509, 681], [473, 681]], [[774, 642], [804, 642], [804, 680], [774, 680]], [[219, 861], [345, 861], [345, 899], [219, 899]], [[505, 861], [633, 861], [633, 901], [505, 901]], [[781, 861], [937, 861], [937, 899], [781, 899]], [[234, 912], [328, 912], [328, 942], [234, 942]], [[524, 912], [616, 912], [616, 942], [524, 942]], [[812, 912], [906, 912], [906, 942], [812, 942]], [[467, 1017], [509, 1017], [509, 1059], [467, 1059]], [[219, 1243], [341, 1243], [341, 1283], [219, 1283]], [[523, 1243], [615, 1243], [615, 1283], [523, 1283]], [[813, 1245], [905, 1245], [905, 1283], [813, 1283]], [[262, 1294], [334, 1294], [334, 1324], [262, 1324]], [[522, 1291], [619, 1291], [619, 1327], [522, 1327]], [[806, 1294], [910, 1294], [910, 1326], [806, 1326]], [[345, 1439], [611, 1439], [611, 1475], [345, 1475]], [[627, 1439], [787, 1439], [787, 1475], [627, 1475]], [[445, 1475], [505, 1475], [505, 1511], [445, 1511]], [[517, 1475], [685, 1475], [685, 1511], [517, 1511]], [[807.0220279500418, 545.1638810551212], [848.6561937085138, 550.6054983030302], [843.9779720499582, 579.8361189448788], [803.3438062914862, 574.3945016969698]], [[230.99099080900552, 1292.1747742652155], [271.6414132997665, 1296.5777005308948], [268.00900919099445, 1325.8252257347845], [227.35858670023347, 1320.4222994691052]]]
+
 
 # GPT_API
 OPENAI_API_KEY = ""
@@ -39,24 +42,12 @@ url = "image url"
 # adjust all of them to be as accurate as possible.
 # accurately contain the size of the detected food names.
 # adjust all of them until the conditions are met.
-# query_OCR = ("Please perform OCR on image. "
-#              "Extract names of the foods along with their extract bounding box coordinates that match the text through OCR. "
-#              "Condition 1: All coordinates should be very accurate, detailed and each coordinate must contains all text of the matching food name detected in the image. "
-#              "Condition 2: The coordinates should be normalized in 0-1 space and provided in the format (x_min, y_min, x_max, y_max). "
-#              "Make sure the coordinates are accurate before returning them. "
-#              "If not, modify them to be highly accurate. "
-#              "Only return this format, nothing else. ")
-# query_OCR = ("Please perform OCR on image which is about menu. "
-#              "Extract specific food names in a menu image along with their bounding boxs coordinates that match the text through OCR. "
-#              "The coordinates for the bounding boxes should be provided in normalized values in 0-1 space (relative to the image size) and very accurate. "
-#              "The coordinate formate is (x_min, y_min, x_max, y_max). "
-#              "Make sure the coordinates are accurate before returning them. "
-#              "If not, modify them to be highly accurate. "
-#              "Only return this format, nothing else. ")
-query_OCR = ("Please perform OCR on image which is about menu. "
-             "Extract specific food names in a menu image along with their bounding boxs coordinates that match the text through OCR. "
-             "The coordinates for the bounding boxes should be provided in normalized values in 0-1 space (relative to the image size) and very accurate. "
-             "The coordinate formate is (x_min, y_min, x_max, y_max). "
+query_OCR = ("Perform OCR on the given menu image to extract food names. "
+             "If the extracted food names match or are similar to any element in the provided text list, "
+             "return the corresponding element from the bounding box list that has the same index as the matched text."
+             "The coordinate formate is (x_min, y_min, x_max, y_max)."
+             f"text list: {text_list}"
+             f"bounding box list: {bounding_box_list}"
              "Only return this format, nothing else. ")
 
 format_OCR = '''Format: {"food": ["food_1", "food_2"], "position": [[(x_min, y_min), (x_max, y_max)]]}'''
