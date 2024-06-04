@@ -1,6 +1,5 @@
 # 서버 포트 설정
 server:
-  address: 127.0.0.1
   port: 8090
 
 # database 연동 설정
@@ -25,9 +24,18 @@ spring:
 flask:
   server:
     url: http://127.0.0.1:5000
+  auth:
+    token: myToken1234
 
 # Frontend 서버 URL 설정
+### 없어도 될 것 같음
 frontend:
   server:
     url: http://localhost:3000
+
+image:
+  upload:
+    dir: C:/Users/idyll
+  base:
+    url: http://192.168.0.37:8090/uploads
 
