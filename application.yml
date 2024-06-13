@@ -4,6 +4,10 @@ server:
 
 # database 연동 설정
 spring:
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/translate?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -18,7 +22,10 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
+
+  profiles:
+    include: private
 
 # Flask 서버 URL 설정
 flask:
@@ -28,14 +35,23 @@ flask:
     token: myToken1234
 
 # Frontend 서버 URL 설정
-### 없어도 될 것 같음
 frontend:
   server:
     url: http://localhost:3000
 
-image:
-  upload:
-    dir: C:/Users/idyll
-  base:
-    url: http://192.168.0.37:8090/uploads
+
+upload:
+  dir: src/main/resources/images
+  image-base-url: http://192.168.0.37:8090/images
+
+cloud:
+  aws:
+    s3:
+      bucket: tabas3
+    stack.auto: false
+    region.static: ap-northeast-2
+    credentials:
+      accessKey: aaa
+      secretKey: aaa
+
 
